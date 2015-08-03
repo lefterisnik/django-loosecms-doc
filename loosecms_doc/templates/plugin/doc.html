@@ -1,0 +1,102 @@
+{% load humanize tscms_doc_tags %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#categoryInfo">
+                        Προβολή κατηγοριών
+                        </a>
+                    </h4>
+                </div>
+                {% if category_slug %}
+                    <div id="categoryInfo" class="panel-collapse collapse in">
+                {% else %}
+                    <div id="categoryInfo" class="panel-collapse collapse">
+                {% endif %}
+                    <div class="panel-body">
+                        <ul class="nav nav-pills">
+                            {% for cat in categories %}
+                                {% if cat.doc__count != 0 %}
+                                    {% if cat.slug == category_slug %}
+                                        <li class="active">
+                                    {% else %}
+                                        <li>
+                                    {% endif %}
+                                    <a href="{% url 'category-info' page_slug cat.slug %}">
+                                        {{ cat.title }} <span class="badge">{{ cat.doc__count }}</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        {% if slug %}
+            <h3>{{ docs.title }}</h3>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h6><span class="glyphicon glyphicon-calendar"></span> Αναρτήθηκε {{ docs.ctime|naturaltime }}</h6>
+                    {% if docs.document_authors %}
+                        <h6>Συγγραφείς: {{ docs.document_authors }}</h6>
+                    {% endif %}
+                    <h6>Μέγεθος: {{ docs|filesize|filesizeformat }}</h6>
+                    <h6>Λήψεις: {{ docs.hits }}</h6>
+                    <h6>
+                        <a href="{% url 'download-info' docs.pk %}" target="_blank">
+                            <span class="glyphicon glyphicon-download"></span>
+                            Λήψη αρχείου
+                        </a>
+                    </h6>
+                </div>
+                <div class="col-lg-6">
+                    <h6 class="pull-right"><span class="glyphicon glyphicon-calendar"></span> Τελευταία τροποποίηση {{ docs.ctime|naturaltime }}</h6>
+                </div>
+            </div>
+            <hr/>
+            {{ docs.body|safe }}
+        {% elif category_slug or page_slug %}
+            <div class="table-responsive">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="example">
+                    <thead>
+                        <tr>
+                            <th width="17,5%">Τίτλος</th>
+                            <th width="27,5%">Περιγραφή</th>
+                            <th width="17,5%">Αναρτήθηκε</th>
+                            <th width="17,5%">Τελευταία ενημ.</th>
+                            <th width="10%">Μέγεθος</th>
+                            <th width="10%">Λήψεις</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for doc in docs %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'download-info' doc.pk %}" target="_blank">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                    {{ doc.title }}
+                                </a><br/>
+                                {% if doc.document_authors %}
+                                    ({{ doc.document_authors }})
+                                {% endif %}
+                            </td>
+                            <td>{{ doc.body|safe }}</td>
+                            <td>{{ doc.ctime|naturaltime }}</td>
+                            <td>{{ doc.utime|naturaltime }}</td>
+                            <td>{{ doc|filesize|filesizeformat }}</td>
+                            <td>{{ doc.hits }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>

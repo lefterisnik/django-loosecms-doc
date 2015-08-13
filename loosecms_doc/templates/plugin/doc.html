@@ -63,8 +63,10 @@
             <hr/>
             {{ docs.body|safe }}
         {% elif category_slug or page_slug %}
+            {% if docmanager.responsive %}
             <div class="table-responsive">
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="example">
+            {% endif %}
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover table-condensed table-datatable">
                     <thead>
                         <tr>
                             <th width="17,5%">Τίτλος</th>
@@ -79,10 +81,17 @@
                     {% for doc in docs %}
                         <tr>
                             <td>
+                                {% if doc.login_required and user.is_anonymous %}
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="{{ docmanager.message }}">
+                                    <span class="glyphicon glyphicon-download"></span>
+                                    {{ doc.title }}
+                                </a><br/>
+                                {% else %}
                                 <a href="{% url 'download-info' doc.pk %}" target="_blank">
                                     <span class="glyphicon glyphicon-download"></span>
                                     {{ doc.title }}
                                 </a><br/>
+                                {% endif %}
                                 {% if doc.document_authors %}
                                     ({{ doc.document_authors }})
                                 {% endif %}
@@ -96,7 +105,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+            {% if docmanager.responsive %}
             </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>

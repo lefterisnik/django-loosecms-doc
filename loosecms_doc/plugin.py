@@ -15,7 +15,7 @@ from loosecms.plugin_modeladmin import PluginModelAdmin
 class DocInline(admin.StackedInline):
     model = Doc
     extra = 1
-    prepopulated_fields = {'slug':('title', )}
+    prepopulated_fields = {'slug': ('title', )}
 
 
 class DocPlugin(PluginModelAdmin):
@@ -28,6 +28,7 @@ class DocPlugin(PluginModelAdmin):
         DocInline,
     ]
     extra_initial_help = None
+    fields = ('type', 'placeholder', 'title', 'page', 'responsive', 'message', 'published')
 
     def render(self, context, manager):
         categories = DocCategory.objects.annotate(Count('doc'))
@@ -63,7 +64,7 @@ class DocPlugin(PluginModelAdmin):
         if self.extra_initial_help:
             initial['type'] = self.extra_initial_help['type']
             initial['placeholder'] = self.extra_initial_help['placeholder']
-            initial['manager'] = self.extra_initial_help['page']
+            initial['page'] = self.extra_initial_help['page']
 
             return initial
         else:

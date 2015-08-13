@@ -12,7 +12,14 @@ class DocManager(Plugin):
     page = models.ForeignKey(Page, verbose_name=_('page'),
                              help_text=_('Select the page to render the doc manager. Additional, it used to create the '
                                          'urls of each article.'))
-    ctime = models.DateTimeField(editable=False, default=timezone.now)
+    responsive = models.BooleanField(_('responsive'), default=True,
+                                     help_text=_('Check this box if you want the table to adapt to a very small '
+                                                 'screens under 768px.'))
+    message = models.TextField(_('message'), blank=True,
+                               default=_('You will need to login in order to download this file'),
+                               help_text=_('Give the message that will appear in the files that need a login user '
+                                           'to download them.'))
+    ctime = models.DateTimeField(auto_now_add=True)
 
     utime = models.DateTimeField(auto_now=True)
 
@@ -30,6 +37,7 @@ class DocCategory(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class Doc(models.Model):
     title = models.CharField(_('title'), max_length=200, unique=True,
                              help_text=_('Give the name of the doc.'))
@@ -38,7 +46,7 @@ class Doc(models.Model):
                                         'article.'))
     document = models.FileField(_('document'), upload_to='docs')
 
-    document_authors = models.TextField(_('document_authors'), null=True)
+    document_authors = models.TextField(_('document_authors'), blank=True)
 
     body = RichTextField(_('body'))
 
@@ -46,11 +54,13 @@ class Doc(models.Model):
                                  help_text=_('Select a category.'))
     manager = models.ForeignKey(DocManager, verbose_name=_('manager'),
                                 help_text=_('Select the doc manager.'))
-    ctime = models.DateTimeField(_('ctime'), auto_now_add=True)
+    login_required = models.BooleanField(_('login required'), default=False,
+                                         help_text=_('Check this box if login is required.'))
+    ctime = models.DateTimeField(auto_now_add=True)
 
-    utime = models.DateTimeField(_('utime'), auto_now=True)
+    utime = models.DateTimeField(auto_now=True)
 
-    hits = models.IntegerField(_('hits'), default=0)
+    hits = models.IntegerField(default=0, editable=False)
 
     published = models.BooleanField(_('published'), default=True)
 

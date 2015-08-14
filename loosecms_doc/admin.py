@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
-from .models import DocCategory, DocManager, Doc
-from .plugin import DocPlugin
+from .models import *
+from .plugin import *
+
+
+class DocCategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title', )}
 
 
 class DocAdmin(admin.ModelAdmin):
@@ -18,10 +22,7 @@ class DocAdmin(admin.ModelAdmin):
     get_page.short_description = _('Page')
     get_page.admin_order_field = 'manager__page'
 
-
-class DocCategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title', )}
-
 admin.site.register(DocCategory, DocCategoryAdmin)
 admin.site.register(DocManager, DocPlugin)
+admin.site.register(NewsDocManager, NewsDocPlugin)
 admin.site.register(Doc, DocAdmin)

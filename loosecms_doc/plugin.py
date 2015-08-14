@@ -5,8 +5,8 @@ from django.contrib import admin
 from django.http import Http404
 from django.db.models import Count
 
-from .forms import DocManagerForm
-from .models import DocManager, Doc, DocCategory
+from .forms import *
+from .models import *
 
 from loosecms.plugin_pool import plugin_pool
 from loosecms.plugin_modeladmin import PluginModelAdmin
@@ -23,7 +23,7 @@ class DocPlugin(PluginModelAdmin):
     name = _('Documents')
     form = DocManagerForm
     plugin = True
-    template = "plugin/doc.html"
+    template = "plugin/docs.html"
     inlines = [
         DocInline,
     ]
@@ -70,4 +70,33 @@ class DocPlugin(PluginModelAdmin):
         else:
             return {'type': 'DocPlugin'}
 
+
+class NewsDocPlugin(PluginModelAdmin):
+    model = NewsDocManager
+    name = _('Recent Docs')
+    form = NewsDocManagerForm
+    plugin = True
+    template = "plugin/new_docs.html"
+    extra_initial_help = None
+    fields = ('type', 'placeholder', 'title', 'number', 'published')
+
+    def render(self, context, manager):
+        newsdocs = Doc.objects.select_related().filter(published=True).order_by('-ctime')[:manager.number]
+
+        t = loader.get_template(self.template)
+        context['newsdocs'] = newsdocs
+        context['newsdocmanager'] = manager
+        return t.render(context)
+
+    def get_changeform_initial_data(self, request):
+        initial = {}
+        if self.extra_initial_help:
+            initial['type'] = self.extra_initial_help['type']
+            initial['placeholder'] = self.extra_initial_help['placeholder']
+
+            return initial
+        else:
+            return {'type': 'NewsDocPlugin'}
+
 plugin_pool.register_plugin(DocPlugin)
+plugin_pool.register_plugin(NewsDocPlugin)

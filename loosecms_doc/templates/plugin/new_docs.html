@@ -1,0 +1,26 @@
+{% load i18n %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{% trans 'Recent Docs' %}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="carousel slide" data-ride="carousel" data-interval="4000">
+            <div class="carousel-inner">
+                {% for doc in newsdocs %}
+                    {% if forloop.counter == 1 %}
+                        <div class="item active">
+                    {% else %}
+                        <div class="item">
+                    {% endif %}
+                    <h5>
+                        <a href="{% url 'info' doc.manager.page.slug doc.category.slug doc.slug %}">{{ doc.title }}</a><hr/>
+                    </h5>
+                    <h6>
+                        {{ doc.body|truncatewords_html:10|safe }}
+                    </h6>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

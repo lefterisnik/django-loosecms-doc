@@ -2,14 +2,15 @@
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db import models
-from loosecms.models import Plugin, Page
+from loosecms.models import Plugin, HtmlPage
 from ckeditor.fields import RichTextField
 
 
 class DocManager(Plugin):
     title = models.CharField(_('title'), max_length=200,
                              help_text=_('Give the name of the doc manager.'))
-    page = models.ForeignKey(Page, verbose_name=_('page'),
+    page = models.ForeignKey(HtmlPage, verbose_name=_('page'),
+                             limit_choices_to={'is_template': False},
                              help_text=_('Select the page to render the doc manager. Additional, it used to create the '
                                          'urls of each article.'))
     responsive = models.BooleanField(_('responsive'), default=True,
@@ -19,6 +20,19 @@ class DocManager(Plugin):
                                default=_('You will need to login in order to download this file'),
                                help_text=_('Give the message that will appear in the files that need a login user '
                                            'to download them.'))
+    ctime = models.DateTimeField(auto_now_add=True)
+
+    utime = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return "%s (%s)" %(self.title, self.type)
+
+
+class NewsDocManager(Plugin):
+    title = models.CharField(_('title'), max_length=200,
+                             help_text=_('Give the name of the doc news manager.'))
+    number = models.IntegerField(_('number'),
+                                 help_text=_('Give the number of docs rendering by this manager'))
     ctime = models.DateTimeField(auto_now_add=True)
 
     utime = models.DateTimeField(auto_now=True)

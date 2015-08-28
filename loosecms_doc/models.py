@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
 from django.db import models
-from loosecms.models import Plugin, HtmlPage
+from django.utils.translation import ugettext_lazy as _
+
 from ckeditor.fields import RichTextField
+from loosecms.models import Plugin, HtmlPage
+from loosecms.fields import UploadFilePathField
 
 
 class DocManager(Plugin):
@@ -58,7 +59,7 @@ class Doc(models.Model):
     slug = models.SlugField(_('slug'), unique=True,
                             help_text=_('Give the slug of the doc. Is needed to create the url of rendering this '
                                         'article.'))
-    document = models.FileField(_('document'), upload_to='docs')
+    document = UploadFilePathField(_('document'), upload_to='docs', path='docs')
 
     document_authors = models.TextField(_('document_authors'), blank=True)
 

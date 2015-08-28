@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.utils.translation import ugettext_lazy as _
-from django.template import loader
-from django.contrib import admin
 from django.http import Http404
+from django.contrib import admin
 from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
 
 from .forms import *
 from .models import *
@@ -30,8 +29,8 @@ class DocPlugin(PluginModelAdmin):
     extra_initial_help = None
     fields = ('type', 'placeholder', 'title', 'page', 'responsive', 'message', 'published')
 
-    def render(self, context, manager):
-        categories = DocCategory.objects.annotate(Count('doc'))
+    def update_context(self, context, manager):
+        categories = DocCategory.objects.filter(doc__manager=manager).annotate(doc_count=Count('doc'))
         if 'kwargs' in context:
             if 'slug' in context['kwargs']:
                 context['slug'] = context['kwargs']['slug']
@@ -53,11 +52,10 @@ class DocPlugin(PluginModelAdmin):
             ''' Fetch all articles for requested page'''
             docs = Doc.objects.select_related().filter(published=True, manager=manager).order_by('-ctime')
 
-        t = loader.get_template(self.template)
         context['docs'] = docs
         context['categories'] = categories
         context['docmanager'] = manager
-        return t.render(context)
+        return context
 
     def get_changeform_initial_data(self, request):
         initial = {}

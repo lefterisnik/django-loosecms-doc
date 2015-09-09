@@ -1,7 +1,9 @@
 {% load i18n %}
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">{% trans 'Recent Docs' %}</h3>
+        <h3 class="panel-title">
+            {{ newsdocmanager.title }}
+        </h3>
     </div>
     <div class="panel-body">
         <div class="carousel slide" data-ride="carousel" data-interval="4000">

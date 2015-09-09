@@ -30,6 +30,7 @@ class DocManager(Plugin):
     def __unicode__(self):
         return "%s (%s)" %(self.title, self.type)
 
+
 # TODO: Copy login from article
 class NewsDocManager(Plugin):
     default_type = 'NewsDocManagerPlugin'
@@ -38,6 +39,15 @@ class NewsDocManager(Plugin):
                              help_text=_('Give the name of the doc news manager.'))
     number = models.IntegerField(_('number'),
                                  help_text=_('Give the number of docs rendering by this manager'))
+    header_title = models.CharField(_('header title'), max_length=150,
+                                    default=_('Recent documents'),
+                                    help_text=_('Give the title of the panel which documents will appeared.'))
+    manager = models.ForeignKey(DocManager, verbose_name=_('manager'), blank=True, null=True,
+                                limit_choices_to={'published': True},
+                                help_text=_('Select the document manager that contain the request documents. In case'
+                                            ' of no selection all documents form all managers will be included.'))
+    interval = models.PositiveSmallIntegerField(_('interval'), default=2000,
+                                                help_text=_('Set the change rate in miliseconds.'))
     ctime = models.DateTimeField(auto_now_add=True)
 
     utime = models.DateTimeField(auto_now=True)

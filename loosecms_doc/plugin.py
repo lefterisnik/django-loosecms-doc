@@ -59,6 +59,15 @@ class NewsDocManagerPlugin(PluginModelAdmin):
     name = _('Recent Document Container')
     plugin = True
     template = "plugin/new_docs.html"
+    fieldsets = (
+        (None, {
+            'fields': ('type', 'placeholder', 'title', 'number', 'published')
+        }),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': ('manager', 'header_title', 'interval')
+        }),
+    )
 
     def update_context(self, context, manager):
         if manager.manager:
@@ -66,7 +75,7 @@ class NewsDocManagerPlugin(PluginModelAdmin):
                                filter(published=True, manager=manager.manager).\
                                order_by('-ctime')[:manager.number]
         else:
-            newsdocs= Doc.select_related().\
+            newsdocs= Doc.objects.select_related().\
                                filter(published=True).\
                                order_by('-ctime')[:manager.number]
 

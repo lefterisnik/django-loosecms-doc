@@ -23,6 +23,4 @@ class DocAdmin(admin.ModelAdmin):
     get_page.admin_order_field = 'manager__page'
 
 admin.site.register(DocCategory, DocCategoryAdmin)
-admin.site.register(DocManager, DocPlugin)
-admin.site.register(NewsDocManager, NewsDocPlugin)
 admin.site.register(Doc, DocAdmin)

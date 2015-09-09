@@ -8,6 +8,8 @@ from loosecms.fields import UploadFilePathField
 
 
 class DocManager(Plugin):
+    default_type = 'DocManagerPlugin'
+
     title = models.CharField(_('title'), max_length=200,
                              help_text=_('Give the name of the doc manager.'))
     page = models.ForeignKey(HtmlPage, verbose_name=_('page'),
@@ -28,8 +30,10 @@ class DocManager(Plugin):
     def __unicode__(self):
         return "%s (%s)" %(self.title, self.type)
 
-
+# TODO: Copy login from article
 class NewsDocManager(Plugin):
+    default_type = 'NewsDocManagerPlugin'
+
     title = models.CharField(_('title'), max_length=200,
                              help_text=_('Give the name of the doc news manager.'))
     number = models.IntegerField(_('number'),

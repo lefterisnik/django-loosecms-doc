@@ -12,7 +12,6 @@ Loose CMS Text plugin requires:
 * Django version 1.8
 * Python 2.6 or 2.7
 * django-loose-cms
-* django-ckeditor
 * django-haystack
 
 Quick Start

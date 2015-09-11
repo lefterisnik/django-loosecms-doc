@@ -73,7 +73,7 @@ class Doc(models.Model):
     slug = models.SlugField(_('slug'), unique=True,
                             help_text=_('Give the slug of the doc. Is needed to create the url of rendering this '
                                         'article.'))
-    document = UploadFilePathField(_('document'), upload_to='docs', path='docs')
+    document = UploadFilePathField(_('document'), upload_to='docs', path='docs', recursive=True)
 
     document_authors = models.TextField(_('document_authors'), blank=True)
 

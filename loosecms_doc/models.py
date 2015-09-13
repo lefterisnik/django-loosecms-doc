@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from ckeditor.fields import RichTextField
 from loosecms.models import Plugin, HtmlPage
-from loosecms.fields import UploadFilePathField
+from loosecms.fields import UploadFilePathField, LoosecmsRichTextField
 
 
 class DocManager(Plugin):
@@ -77,7 +77,7 @@ class Doc(models.Model):
 
     document_authors = models.TextField(_('document_authors'), blank=True)
 
-    body = RichTextField(_('body'))
+    body = LoosecmsRichTextField(_('body'))
 
     category = models.ForeignKey(DocCategory, verbose_name=_('category'),
                                  help_text=_('Select a category.'))

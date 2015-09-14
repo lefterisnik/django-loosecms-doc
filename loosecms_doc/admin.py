@@ -5,10 +5,6 @@ from .models import *
 from .plugin import *
 
 
-class DocCategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title', )}
-
-
 class DocAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title', )}
     search_fields = ('title', 'body')
@@ -22,5 +18,4 @@ class DocAdmin(admin.ModelAdmin):
     get_page.short_description = _('Page')
     get_page.admin_order_field = 'manager__page'
 
-admin.site.register(DocCategory, DocCategoryAdmin)
 admin.site.register(Doc, DocAdmin)

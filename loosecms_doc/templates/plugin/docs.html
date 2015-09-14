@@ -24,8 +24,8 @@
                                     {% else %}
                                         <li>
                                     {% endif %}
-                                    <a href="{% url 'category-info' page_slug cat.slug %}">
-                                        {{ cat.title }} <span class="badge">{{ cat.doc_count }}</span>
+                                    <a href="{% url 'doc-category-info' page_slug cat.slug %}">
+                                        {{ cat.name }} <span class="badge">{{ cat.doc_count }}</span>
                                     </a>
                                 </li>
                                 {% endif %}

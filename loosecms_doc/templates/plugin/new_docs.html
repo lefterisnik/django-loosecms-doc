@@ -15,7 +15,7 @@
                         <div class="item">
                     {% endif %}
                     <h5>
-                        <a href="{% url 'info' doc.manager.page.slug doc.category.slug doc.slug %}">{{ doc.title }}</a><hr/>
+                        <a href="{% url 'info' doc.manager.page.slug doc.slug %}">{{ doc.title }}</a><hr/>
                     </h5>
                     <h6>
                         {{ doc.body|truncatewords_html:10|safe }}

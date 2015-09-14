@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 
+from taggit.models import Tag
+
 from .models import *
 
 from loosecms.plugin_pool import plugin_pool
@@ -26,11 +28,10 @@ class DocManagerPlugin(PluginModelAdmin):
     ]
 
     def update_context(self, context, manager):
-        categories = DocCategory.objects.filter(doc__manager=manager).annotate(doc_count=Count('doc'))
+        categories = Tag.objects.filter(doc__manager=manager).annotate(doc_count=Count('doc'))
         if 'kwargs' in context:
             if 'slug' in context['kwargs']:
                 context['slug'] = context['kwargs']['slug']
-                context['category_slug'] = context['kwargs']['category_slug']
                 '''Fetch specific doc'''
                 try:
                     docs = Doc.objects.select_related().get(published=True, slug=context['slug'])

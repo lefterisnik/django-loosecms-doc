@@ -34,20 +34,25 @@ class DocManagerPlugin(PluginModelAdmin):
                 context['slug'] = context['kwargs']['slug']
                 '''Fetch specific doc'''
                 try:
-                    docs = Doc.objects.select_related().get(published=True, slug=context['slug'])
+                    docs = Doc.objects.select_related()\
+                        .get(published=True, slug=context['slug'], manager=manager)
                 except Doc.DoesNotExist:
                     raise Http404
             elif 'category_slug' in context['kwargs']:
                 context['category_slug'] = context['kwargs']['category_slug']
 
                 '''Fetch all docs for requested category'''
-                docs = Doc.objects.select_related().filter(published=True, category__slug=context['kwargs']['category_slug']).order_by('-ctime')
+                docs = Doc.objects.select_related()\
+                    .filter(published=True, category__slug=context['kwargs']['category_slug'], manager=manager)\
+                    .order_by('-ctime')
                 if len(docs) == 0:
                     raise Http404
 
         elif context['page_slug'] != '':
             ''' Fetch all articles for requested page'''
-            docs = Doc.objects.select_related().filter(published=True, manager=manager).order_by('-ctime')
+            docs = Doc.objects.select_related()\
+                .filter(published=True, manager=manager)\
+                .order_by('-ctime')
 
         context['docs'] = docs
         context['categories'] = categories

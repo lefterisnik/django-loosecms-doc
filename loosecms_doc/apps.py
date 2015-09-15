@@ -5,4 +5,4 @@ from django.utils.translation import ugettext_lazy as _
 
 class LooseCMSDocConfig(AppConfig):
     name = 'loosecms_doc'
-    verbose_name = _('Loose CMS Plugin - Doc')
+    verbose_name = _('Loose CMS Plugin - Document')

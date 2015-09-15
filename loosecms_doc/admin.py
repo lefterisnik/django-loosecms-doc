@@ -15,6 +15,7 @@ class DocAdmin(admin.ModelAdmin):
 
     def get_page(self, obj):
         return obj.manager.page
+
     get_page.short_description = _('Page')
     get_page.admin_order_field = 'manager__page'
 

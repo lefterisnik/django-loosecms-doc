@@ -87,3 +87,7 @@ class Doc(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        verbose_name = _('document')
+        verbose_name_plural = _('documents')

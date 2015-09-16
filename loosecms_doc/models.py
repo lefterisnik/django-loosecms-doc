@@ -9,8 +9,10 @@ from loosecms.fields import UploadFilePathField, LoosecmsRichTextField, Loosecms
 class DocManager(Plugin):
     default_type = 'DocManagerPlugin'
 
-    title = models.CharField(_('title'), max_length=200,
-                             help_text=_('Give the name of the doc manager.'))
+    title = models.CharField(_('title'), max_length=200, unique=True,
+                             help_text=_('Give the name of the document manager.'))
+    slug = models.SlugField(_('slug'), unique=True,
+                            help_text=_('Give the slug of the document manager.'))
     page = models.ForeignKey(HtmlPage, verbose_name=_('page'),
                              limit_choices_to={'is_template': False},
                              help_text=_('Select the page to render the doc manager. Additional, it used to create the '
@@ -26,16 +28,18 @@ class DocManager(Plugin):
 
     utime = models.DateTimeField(auto_now=True)
 
+
     def __unicode__(self):
         return "%s (%s)" %(self.title, self.type)
 
 
-# TODO: Copy login from article
 class NewsDocManager(Plugin):
     default_type = 'NewsDocManagerPlugin'
 
-    title = models.CharField(_('title'), max_length=200,
-                             help_text=_('Give the name of the doc news manager.'))
+    title = models.CharField(_('title'), max_length=200, unique=True,
+                             help_text=_('Give the name of the document news manager.'))
+    slug = models.SlugField(_('slug'), unique=True,
+                            help_text=_('Give the slug of the document news manager.'))
     number = models.IntegerField(_('number'),
                                  help_text=_('Give the number of docs rendering by this manager'))
     header_title = models.CharField(_('header title'), max_length=150,
@@ -57,10 +61,10 @@ class NewsDocManager(Plugin):
 
 class Doc(models.Model):
     title = models.CharField(_('title'), max_length=200, unique=True,
-                             help_text=_('Give the name of the doc.'))
+                             help_text=_('Give the name of the document.'))
     slug = models.SlugField(_('slug'), unique=True,
-                            help_text=_('Give the slug of the doc. Is needed to create the url of rendering this '
-                                        'article.'))
+                            help_text=_('Give the slug of the document. Is needed to create the url of rendering this '
+                                        'document.'))
     document = UploadFilePathField(_('document'), upload_to='docs', path='docs', recursive=True)
 
     document_authors = models.TextField(_('document_authors'), blank=True)

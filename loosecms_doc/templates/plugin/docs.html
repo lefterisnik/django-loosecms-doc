@@ -50,10 +50,17 @@
                     <h6>Μέγεθος: {{ docs|filesize|filesizeformat }}</h6>
                     <h6>Λήψεις: {{ docs.hits }}</h6>
                     <h6>
-                        <a href="{% url 'download-info' docs.pk %}" target="_blank">
+                        {% if doc.login_required and user.is_anonymous %}
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="{{ docmanager.message }}">
                             <span class="glyphicon glyphicon-download"></span>
                             Λήψη αρχείου
-                        </a>
+                        </a><br/>
+                        {% else %}
+                        <a href="{% url 'download-info' docs.manager.page.slug docs.pk %}" target="_blank">
+                            <span class="glyphicon glyphicon-download"></span>
+                            Λήψη αρχείου
+                        </a><br/>
+                        {% endif %}
                     </h6>
                 </div>
                 <div class="col-lg-6">
@@ -87,7 +94,7 @@
                                     {{ doc.title }}
                                 </a><br/>
                                 {% else %}
-                                <a href="{% url 'download-info' doc.pk %}" target="_blank">
+                                <a href="{% url 'download-info' doc.manager.page.slug doc.pk %}" target="_blank">
                                     <span class="glyphicon glyphicon-download"></span>
                                     {{ doc.title }}
                                 </a><br/>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from loosecms.models import Plugin, HtmlPage
@@ -45,6 +46,12 @@ class NewsDocManager(Plugin):
     header_title = models.CharField(_('header title'), max_length=150,
                                     default=_('Recent documents'),
                                     help_text=_('Give the title of the panel which documents will appeared.'))
+    rss = models.BooleanField(_('rss'), default=False,
+                              help_text=_('Check this box if you want to appear the rss link in the header.'))
+    rss_title = models.CharField(_('rss title'), max_length=200, blank=True,
+                                 help_text=_('Give the title of the rss feed.'))
+    rss_description = models.CharField(_('rss description'), max_length=200, blank=True,
+                                       help_text=_('Give a small description for the rss feed.'))
     manager = models.ForeignKey(DocManager, verbose_name=_('manager'), blank=True, null=True,
                                 limit_choices_to={'published': True},
                                 help_text=_('Select the document manager that contain the request documents. In case'
@@ -57,6 +64,19 @@ class NewsDocManager(Plugin):
 
     def __unicode__(self):
         return "%s (%s)" %(self.title, self.type)
+
+    def clean(self):
+        """
+        Don't allow rss title and rss description to be null if rss is checked.
+        :return: cleaned_data and errors
+        """
+        if self.rss:
+            if not self.rss_title:
+                msg = _('You will need to give a rss title if rss is checked')
+                raise ValidationError({'rss_title': msg})
+            if not self.rss_description:
+                msg = _('Youn will need to give a rss description if rss is checked')
+                raise ValidationError({'rss_description': msg})
 
 
 class Doc(models.Model):

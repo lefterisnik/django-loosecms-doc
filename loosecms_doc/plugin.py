@@ -73,6 +73,10 @@ class NewsDocManagerPlugin(PluginModelAdmin):
             'classes': ('collapse',),
             'fields': ('manager', 'header_title', 'interval')
         }),
+        ('Rss options', {
+            'classes': ('collapse',),
+            'fields': ('rss', 'rss_title', 'rss_description')
+        }),
     )
 
     def update_context(self, context, manager):

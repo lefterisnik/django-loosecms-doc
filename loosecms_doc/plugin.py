@@ -11,11 +11,16 @@ from .models import *
 from loosecms.plugin_pool import plugin_pool
 from loosecms.plugin_modeladmin import PluginModelAdmin
 
+from parler.admin import TranslatableStackedInline
 
-class DocInline(admin.StackedInline):
+
+class DocInline(TranslatableStackedInline):
     model = Doc
     extra = 1
-    prepopulated_fields = {'slug': ('title', )}
+    fields = ('title', 'slug', 'document', 'document_authors', 'body', 'category', 'manager', 'login_required', 'published')
+
+    def get_prepopulated_fields(self, request, obj=None):
+        return {'slug': ('title',)}
 
 
 class DocManagerPlugin(PluginModelAdmin):

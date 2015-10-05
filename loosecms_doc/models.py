@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from loosecms.models import Plugin, HtmlPage
 from loosecms.fields import UploadFilePathField, LoosecmsRichTextField, LoosecmsTaggableManager
 
+from parler.models import TranslatableModel, TranslatedFields
+
 
 class DocManager(Plugin):
     default_type = 'DocManagerPlugin'
@@ -79,17 +81,11 @@ class NewsDocManager(Plugin):
                 raise ValidationError({'rss_description': msg})
 
 
-class Doc(models.Model):
-    title = models.CharField(_('title'), max_length=200, unique=True,
-                             help_text=_('Give the name of the document.'))
+class Doc(TranslatableModel):
     slug = models.SlugField(_('slug'), unique=True,
                             help_text=_('Give the slug of the document. Is needed to create the url of rendering this '
                                         'document.'))
     document = UploadFilePathField(_('document'), upload_to='docs', path='docs', recursive=True)
-
-    document_authors = models.TextField(_('document_authors'), blank=True)
-
-    body = LoosecmsRichTextField(_('body'))
 
     category = LoosecmsTaggableManager(_('category'))
 
@@ -104,6 +100,14 @@ class Doc(models.Model):
     hits = models.IntegerField(default=0, editable=False)
 
     published = models.BooleanField(_('published'), default=True)
+
+    translations = TranslatedFields(
+        title = models.CharField(_('title'), max_length=200, unique=True,
+                             help_text=_('Give the name of the document.')),
+        document_authors = models.TextField(_('document_authors'), blank=True),
+
+        body = LoosecmsRichTextField(_('body'))
+    )
 
     def update_hits(self):
         self.hits += 1

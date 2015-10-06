@@ -3,7 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from loosecms.models import Plugin, HtmlPage
+from loosecms.models import Plugin, HtmlPage, LoosecmsTagged
 from loosecms.fields import UploadFilePathField, LoosecmsRichTextField, LoosecmsTaggableManager
 
 from parler.models import TranslatableModel, TranslatedFields
@@ -27,6 +27,11 @@ class DocManager(Plugin):
                                default=_('You will need to login in order to download this file'),
                                help_text=_('Give the message that will appear in the files that need a login user '
                                            'to download them.'))
+    category_page = models.BooleanField(_('show category page'), default=True,
+                                        help_text=_('Check this box if you want to show all categories in this page'
+                                                    'or show instant the table with the documents'))
+    hide_categories = models.BooleanField(_('hide categories list'), default=False,
+                                          help_text=_('Select if you want to hide the category list view.'))
     ctime = models.DateTimeField(auto_now_add=True)
 
     utime = models.DateTimeField(auto_now=True)
@@ -87,7 +92,7 @@ class Doc(TranslatableModel):
                                         'document.'))
     document = UploadFilePathField(_('document'), upload_to='docs', path='docs', recursive=True)
 
-    category = LoosecmsTaggableManager(_('category'))
+    category = LoosecmsTaggableManager(_('category'), through=LoosecmsTagged)
 
     manager = models.ForeignKey(DocManager, verbose_name=_('manager'),
                                 help_text=_('Select the doc manager.'))

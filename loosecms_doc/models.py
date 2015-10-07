@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models import Manager
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
@@ -7,6 +8,7 @@ from loosecms.models import Plugin, HtmlPage, LoosecmsTagged
 from loosecms.fields import UploadFilePathField, LoosecmsRichTextField, LoosecmsTaggableManager
 
 from parler.models import TranslatableModel, TranslatedFields
+from parler.managers import TranslationManager
 
 
 class DocManager(Plugin):
@@ -86,6 +88,11 @@ class NewsDocManager(Plugin):
                 raise ValidationError({'rss_description': msg})
 
 
+class CustomManager(TranslationManager):
+
+    def get_queryset(self):
+        return super(CustomManager, self).get_queryset().prefetch_related('translations')
+
 class Doc(TranslatableModel):
     slug = models.SlugField(_('slug'), unique=True,
                             help_text=_('Give the slug of the document. Is needed to create the url of rendering this '
@@ -113,6 +120,8 @@ class Doc(TranslatableModel):
 
         body = LoosecmsRichTextField(_('body'))
     )
+
+    objects = CustomManager()
 
     def update_hits(self):
         self.hits += 1

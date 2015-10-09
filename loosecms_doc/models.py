@@ -93,13 +93,14 @@ class CustomManager(TranslationManager):
     def get_queryset(self):
         return super(CustomManager, self).get_queryset().prefetch_related('translations')
 
+
 class Doc(TranslatableModel):
     slug = models.SlugField(_('slug'), unique=True,
                             help_text=_('Give the slug of the document. Is needed to create the url of rendering this '
                                         'document.'))
     document = UploadFilePathField(_('document'), upload_to='docs', path='docs', recursive=True)
 
-    category = LoosecmsTaggableManager(_('category'), through=LoosecmsTagged)
+    category = LoosecmsTaggableManager(_('category'), through=LoosecmsTagged, blank=True)
 
     manager = models.ForeignKey(DocManager, verbose_name=_('manager'),
                                 help_text=_('Select the doc manager.'))

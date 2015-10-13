@@ -38,9 +38,22 @@ class DocManager(Plugin):
 
     utime = models.DateTimeField(auto_now=True)
 
-
     def __unicode__(self):
         return "%s (%s)" %(self.title, self.type)
+
+    def clean(self):
+        """
+        Don't allow document manager to be attached in home page. This cause 404 error
+        Don't allow document manager to be attached in the same page with a article manager
+        :return: cleaned_data and errors
+        """
+        if self.page.home:
+            msg = _("Document manager can't be attached to the home page. Please select another page.")
+            raise ValidationError({'page': msg})
+
+        if self.page.articlemanager_set.all().count() != 0:
+            msg = _("Conflict! In this page is already exist a article plugin, so you can't add document plugin.")
+            raise ValidationError(msg)
 
 
 class NewsDocManager(Plugin):
@@ -130,6 +143,18 @@ class Doc(TranslatableModel):
 
     def __unicode__(self):
         return self.title
+
+    def clean(self):
+        """
+        Do not allow article formed url to be a page slug
+        :return:
+        """
+        pages = HtmlPage.objects.all().values('slug')
+        document_slug = '/'.join(self.manager.page.slug.split('/') + [self.slug])
+        for page in pages:
+            if document_slug == page['slug'].strip('/'):
+                msg = _('The formed article url "%s" is already exist as page url' % document_slug)
+                raise ValidationError({'slug': msg})
 
     class Meta:
         verbose_name = _('document')

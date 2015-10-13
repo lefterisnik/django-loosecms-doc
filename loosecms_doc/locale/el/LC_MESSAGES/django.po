@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-30 21:24+0300\n"
+"POT-Creation-Date: 2015-10-13 15:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin.py:19
+#: admin.py:23
 msgid "Page"
 msgstr "Σελίδα"
 
@@ -26,29 +26,29 @@ msgstr "Σελίδα"
 msgid "Loose CMS Plugin - Document"
 msgstr "Loose CMS Πρόσθετο - Έγγραφα"
 
-#: models.py:13 models.py:40 models.py:83
+#: models.py:17 models.py:62 models.py:131
 msgid "title"
 msgstr "τίτλος"
 
-#: models.py:14
+#: models.py:18
 #, fuzzy
 #| msgid "Give the name of the doc manager."
 msgid "Give the name of the document manager."
 msgstr "Δώστε το όνομα του διαχειριστή των εγγράφων."
 
-#: models.py:15 models.py:42 models.py:85
+#: models.py:19 models.py:64 models.py:111
 msgid "slug"
 msgstr "ετικέτα"
 
-#: models.py:16
+#: models.py:20
 msgid "Give the slug of the document manager."
 msgstr "Δώστε την ετικέτα του διαχειριστή των εγγράφων."
 
-#: models.py:17
+#: models.py:21
 msgid "page"
 msgstr "σελίδα"
 
-#: models.py:19
+#: models.py:23
 msgid ""
 "Select the page to render the doc manager. Additional, it used to create the "
 "urls of each article."
@@ -57,119 +57,153 @@ msgstr ""
 "Επίσης, θα χρησιμοποιηθεί και για την κατασκευή των συνδέδμων του κάθε "
 "εγγράφου."
 
-#: models.py:21
+#: models.py:25
 msgid "responsive"
 msgstr "αποκριτικός"
 
-#: models.py:22
+#: models.py:26
 msgid ""
 "Check this box if you want the table to adapt to a very small screens under "
 "768px."
-msgstr "Επιλέξτε αυτό το πεδίο εάν επιθυμείτε το table να προσπαρμόζεται σε πολύ μικρές οθόνες κάτω των 768px."
+msgstr ""
+"Επιλέξτε αυτό το πεδίο εάν επιθυμείτε το table να προσπαρμόζεται σε πολύ "
+"μικρές οθόνες κάτω των 768px."
 
-#: models.py:24
+#: models.py:28
 msgid "message"
 msgstr "μήνυμα"
 
-#: models.py:25
+#: models.py:29
 msgid "You will need to login in order to download this file"
-msgstr "Θα πρέπει να συνδεθείτε για να καταβάσετε το αρχείο "
+msgstr "Θα πρέπει να συνδεθείτε για να μεταφορτώσετε το αρχείο"
 
-#: models.py:26
+#: models.py:30
 msgid ""
 "Give the message that will appear in the files that need a login user to "
 "download them."
-msgstr ""
+msgstr "Δώστε το μήνυμα που θα εμφανίζεται στα αρχεία που απαιτούν συνδεδεμένο χρήστη με σκοπό την μεταφόρτωση τους."
 
-#: models.py:41
+#: models.py:32
+#, fuzzy
+#| msgid "category"
+msgid "show category page"
+msgstr "προβολή της σελίδας κατηγοριών"
+
+#: models.py:33
+msgid ""
+"Check this box if you want to show all categories in this pageor show "
+"instant the table with the documents"
+msgstr "Επιλέξτε εάν επιθυμείτε να εμφανίζονται όλες οι κατηγορίες ή να εμφανίζεται κατευθείαν ο πίνακας με όλα τα "
+"έγγραφα"
+
+#: models.py:35
+#, fuzzy
+#| msgid "Categories"
+msgid "hide categories list"
+msgstr "απόκρυψη της λίστας κατηγοριών"
+
+#: models.py:36
+msgid "Select if you want to hide the category list view."
+msgstr "Επιλέξτε εάν επιθυμείτε να κρύψετε την λίστα κατηγοριών."
+
+#: models.py:51
+msgid ""
+"Document manager can't be attached to the home page. Please select another "
+"page."
+msgstr "Ο διαχειριστής εγγράφων δεν μπορεί να προσαρτηθεί στην κεντιρκή σελίδα. Παρακαλώ επιλέξτε άλλη σελίδα."
+
+#: models.py:55
+msgid ""
+"Conflict! In this page is already exist a article plugin, so you can't add "
+"document plugin."
+msgstr "Προσοχή! Σε αυτή τη σελίδα υπάρχει ήδη ένα πρόσθετο άρθρων, με απότελεσμα να μην μπορείτε να προσθέσετε ένα "
+"πρόσθετο εγγράφων."
+
+#: models.py:63
 msgid "Give the name of the document news manager."
 msgstr "Δώστε το όνομα του διαχειριστή των νέων εγγράφων."
 
-#: models.py:43
+#: models.py:65
 msgid "Give the slug of the document news manager."
 msgstr "Δώστε την ετικέτα του διαχειριστή των νέων εγγράφων."
 
-#: models.py:44
+#: models.py:66
 msgid "number"
 msgstr "αριθμός"
 
-#: models.py:45
+#: models.py:67
 msgid "Give the number of docs rendering by this manager"
-msgstr "Δώστε τον αριθμός των εγγράφων που θα διαχειρίζεται ο συγκεκριμένος διαχειριστής"
+msgstr ""
+"Δώστε τον αριθμός των εγγράφων που θα διαχειρίζεται ο συγκεκριμένος "
+"διαχειριστής"
 
-#: models.py:46
+#: models.py:68
 msgid "header title"
 msgstr "τίτλος επικεφαλίδας"
 
-#: models.py:47
+#: models.py:69
 msgid "Recent documents"
 msgstr "Πρόσφατα έγγραφα"
 
-#: models.py:48
+#: models.py:70
 msgid "Give the title of the panel which documents will appeared."
-msgstr ""
+msgstr "Δώστε το τίτλο του panel στο οποίο θα εμφανίζονται τα έγγραφα."
 
-#: models.py:49
+#: models.py:71
 msgid "rss"
-msgstr ""
+msgstr "rss"
 
-#: models.py:50
+#: models.py:72
 msgid "Check this box if you want to appear the rss link in the header."
-msgstr ""
+msgstr "Επιλέξτε εάν επιθυμείτε να εμφανίζεται o rss σύνδεσμος στην επικεφαλίδα."
 
-#: models.py:51
+#: models.py:73
 #, fuzzy
 #| msgid "title"
 msgid "rss title"
-msgstr "τίτλος"
+msgstr "τίτλος rss"
 
-#: models.py:52
+#: models.py:74
 #, fuzzy
 #| msgid "Give the name of the doc."
 msgid "Give the title of the rss feed."
-msgstr "Δώστε το όνομα του έγγραφου."
+msgstr "Δώστε το όνομα του rss των εγγράφων."
 
-#: models.py:53
+#: models.py:75
 msgid "rss description"
-msgstr ""
+msgstr "περιγραφή rss"
 
-#: models.py:54
+#: models.py:76
 msgid "Give a small description for the rss feed."
-msgstr ""
+msgstr "Δώστε μια μικρή περιγραφή για το rss feed."
 
-#: models.py:55 models.py:96
+#: models.py:77 models.py:118
 msgid "manager"
 msgstr "διαχειριστής"
 
-#: models.py:57
+#: models.py:79
 msgid ""
 "Select the document manager that contain the request documents. In case of "
 "no selection all documents form all managers will be included."
 msgstr ""
 
-#: models.py:59
+#: models.py:81
 msgid "interval"
-msgstr ""
+msgstr "ρυθμός ανανέωσης"
 
-#: models.py:60
+#: models.py:82
 msgid "Set the change rate in miliseconds."
 msgstr ""
 
-#: models.py:75
+#: models.py:97
 msgid "You will need to give a rss title if rss is checked"
 msgstr ""
 
-#: models.py:78
+#: models.py:100
 msgid "Youn will need to give a rss description if rss is checked"
 msgstr ""
 
-#: models.py:84
-#, fuzzy
-#| msgid "Give the name of the doc."
-msgid "Give the name of the document."
-msgstr "Δώστε το όνομα του έγγραφου."
-
-#: models.py:86
+#: models.py:112
 #, fuzzy
 #| msgid ""
 #| "Give the slug of the doc. Is needed to create the url of rendering this "
@@ -181,79 +215,96 @@ msgstr ""
 "Δώστε την ετικέτα του έγγραφου. Είναι απαραίτητο για την δημιουργία του "
 "συνδέσμου στον οποίο θα παρουσιάζεται οι πληροφορίες του έγγραφου."
 
-#: models.py:88 models.py:116
+#: models.py:114 models.py:160 templates/plugin/docs.html:127
 msgid "document"
 msgstr ""
 
-#: models.py:90
-msgid "document_authors"
-msgstr "αρχείο"
-
-#: models.py:92
-msgid "body"
-msgstr "σώμα κειμένου"
-
-#: models.py:94
+#: models.py:116
 msgid "category"
 msgstr "κατηγορία"
 
-#: models.py:97
+#: models.py:119
 msgid "Select the doc manager."
 msgstr "Επιλέξτε το διαχειριστή."
 
-#: models.py:98
+#: models.py:120
 msgid "login required"
 msgstr "απαιτείται σύνδεση"
 
-#: models.py:99
+#: models.py:121
 msgid "Check this box if login is required."
 msgstr ""
 
-#: models.py:106
+#: models.py:128
 msgid "published"
 msgstr "δημοσίευση"
 
-#: models.py:117
+#: models.py:132
+#, fuzzy
+#| msgid "Give the name of the doc."
+msgid "Give the name of the document."
+msgstr "Δώστε το όνομα του έγγραφου."
+
+#: models.py:133
+msgid "document_authors"
+msgstr "αρχείο"
+
+#: models.py:135
+msgid "body"
+msgstr "σώμα κειμένου"
+
+#: models.py:156
+#, python-format
+msgid "The formed article url \"%s\" is already exist as page url"
+msgstr ""
+
+#: models.py:161 templates/plugin/docs.html:127
 #, fuzzy
 #| msgid "document_authors"
 msgid "documents"
 msgstr "αρχείο"
 
-#: plugin.py:23
+#: plugin.py:29
 msgid "Document Container"
 msgstr ""
 
-#: plugin.py:65
+#: plugin.py:72
 msgid "Recent Document Container"
 msgstr ""
 
-#: templates/plugin/docs.html:9
+#: templates/plugin/docs.html:11
 msgid "Categories"
 msgstr "Κατηγορίες"
 
-#: templates/plugin/docs.html:79
+#: templates/plugin/docs.html:83
 msgid "Title"
 msgstr "Τίτλος"
 
-#: templates/plugin/docs.html:80
+#: templates/plugin/docs.html:84
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: templates/plugin/docs.html:81
+#: templates/plugin/docs.html:85
 msgid "Posted"
 msgstr "Αναρτήθηκε"
 
-#: templates/plugin/docs.html:82
+#: templates/plugin/docs.html:86
 msgid "Last modification"
 msgstr "Τελευταία τροποποίηση"
 
-#: templates/plugin/docs.html:83
+#: templates/plugin/docs.html:87
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: templates/plugin/docs.html:84
+#: templates/plugin/docs.html:88
 msgid "Downloads"
 msgstr "Λήψεις"
+
+#: templates/plugin/docs.html:135
+#, fuzzy
+#| msgid "Categories"
+msgid "No categories found"
+msgstr "Κατηγορίες"
 
 #~ msgid "Give the name of the category."
 #~ msgstr "Δώστε το όνομα της κατηγορίας"

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.db.models import Manager
+from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
@@ -137,12 +138,16 @@ class Doc(TranslatableModel):
 
     objects = CustomManager()
 
+    class Meta:
+        verbose_name = _('document')
+        verbose_name_plural = _('documents')
+
     def update_hits(self):
         self.hits += 1
         self.save()
 
-    def __unicode__(self):
-        return self.title
+    def get_absolute_url(self):
+        return reverse('info', args=(self.manager.page.slug, self.slug))
 
     def clean(self):
         """
@@ -156,6 +161,6 @@ class Doc(TranslatableModel):
                 msg = _('The formed article url "%s" is already exist as page url' % document_slug)
                 raise ValidationError({'slug': msg})
 
-    class Meta:
-        verbose_name = _('document')
-        verbose_name_plural = _('documents')
+    def __unicode__(self):
+        return self.title
+
